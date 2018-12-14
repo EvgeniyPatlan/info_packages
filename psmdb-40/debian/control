@@ -1,0 +1,11 @@
+Source: percona-server-mongodb-40-info
+Section: utils
+Priority: optional
+Maintainer: Percona LLC
+Homepage: https://percona.com
+Version:     8.0
+Release:     1
+
+Package: percona-server-mongodb-40-info
+Architecture: amd64
+Description: Percona Server for MongoDB info package
