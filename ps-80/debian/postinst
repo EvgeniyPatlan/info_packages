@@ -1,0 +1,14 @@
+#!/bin/sh
+
+echo "====================================================================="
+echo "\033[1mPercona Server 8.0 has been moved to a separate repository\033[0m"
+echo "To avoid conflicts with previous versions of Percona Server, the 8.0 release has been moved to a separate repository.   The percona-release package contains a tool which allows you to easily enable it."
+echo ""
+echo "\033[1msudo percona-release setup ps80\033[0m"
+echo ""
+echo "This command will disable the original repository and enable the Percona Server 8.0 repository. In addition, it will enable our new tools repository which contains Percona XtraBackup 8.0 and other tools that you may find useful."
+echo "For more information about our percona-release tool, please visit:"
+echo "\033[1mhttps://www.percona.com/doc/percona-repo-config/percona-release.html\033[0m"
+echo "====================================================================="
+
+exit 0

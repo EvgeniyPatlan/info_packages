@@ -1,0 +1,5 @@
+percona-server-80-info (8.0-1) unstable; urgency=medium
+
+  * Initial release.
+
+ -- Evgeniy Patlan <evgeniy.patlan@percona.com>  Fri, 14 Dec 2018 09:43:23 +0000

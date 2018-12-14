@@ -1,0 +1,11 @@
+Source: percona-server-80-info
+Section: utils
+Priority: optional
+Maintainer: Percona LLC
+Homepage: https://percona.com
+Version:     8.0
+Release:     1
+
+Package: percona-server-80-info
+Architecture: amd64
+Description: Percona Server for MySQL info package
