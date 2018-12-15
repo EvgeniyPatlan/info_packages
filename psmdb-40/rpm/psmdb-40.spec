@@ -1,4 +1,4 @@
-Name:           Percona-Server-MondoDB-40-info
+Name:           Percona-Server-MongoDB-40-info
 Version:        4.0
 Release:        1%{?dist}
 Summary:        Information package for Percona-Server-MongoDB-40

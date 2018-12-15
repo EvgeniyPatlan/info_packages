@@ -297,18 +297,19 @@ build_source_deb(){
     ARCH=$(echo $(uname -m) | sed -e 's:i686:i386:g')
     tar zxf ${TARFILE} 
     BUILDDIR=${TARFILE%.tar.gz}
-    VERSION=$(grep Version ${BUILDDIR}/debian/control | awk '{print $2}')
-    RELEASE=$(grep Release ${BUILDDIR}/debian/control | awk '{print $2}')
     #
-    mv ${TARFILE} ${DIR_NAME}_${VERSION}-1.orig.tar.gz
+    mv ${TARFILE} ${DIR_NAME}_${VERSION}-${RELEASE}.orig.tar.gz
     cd ${BUILDDIR}
+    dch -D unstable --force-distribution -v "${VERSION}-${RELEASE}" "Update to new MongoDB-Backup version ${VERSION}"
     dpkg-buildpackage -S
     cd ../
     mkdir -p $WORKDIR/source_deb
     mkdir -p $CURDIR/source_deb
+    cp *.debian.tar.* $WORKDIR/source_deb
     cp *_source.changes $WORKDIR/source_deb
     cp *.dsc $WORKDIR/source_deb
-    cp *.orig.tar.gz $WORKDIR/source_deb
+    cp *.tar.gz $WORKDIR/source_deb
+    cp *.debian.tar.* $CURDIR/source_deb
     cp *_source.changes $CURDIR/source_deb
     cp *.dsc $CURDIR/source_deb
     cp *.tar.gz $CURDIR/source_deb
@@ -334,24 +335,18 @@ build_deb(){
     #
     export DEBIAN=$(lsb_release -sc)
     export ARCH=$(echo $(uname -m) | sed -e 's:i686:i386:g')
-    if [ "x${ARCH}" = "xx86_64" ]; then
-        ARCH="amd64"
-    fi
     #
     echo "DEBIAN=${DEBIAN}" >> info_package.properties
     echo "ARCH=${ARCH}" >> info_package.properties
     #
     DSC=$(basename $(find . -name '*.dsc' | sort | tail -n1))
-    DIRNAME=$(echo ${DSC%-1.dsc} | sed -e 's:_:-:g')
-    DIR_VER=$(echo ${DSC%-1.dsc})
+    DIRNAME=$(echo ${DSC%.dsc} | sed -e 's:_:-:g')
+    DIR_VER=$(echo ${DSC%.dsc} | awk -F'_' '{print $1}')
     #
     dpkg-source -x ${DSC}
-    sed -i '/^$/d' ${DIRNAME}/debian/control
-    VERSION=$(grep Version ${DIRNAME}/debian/control | awk '{print $2}')
-    RELEASE=$(grep Release ${DIRNAME}/debian/control | awk '{print $2}')
-    mkdir -p ${DIR_VER}-1.${DEBIAN}_${ARCH}
-    mv ${DIRNAME}/debian ${DIR_VER}-1.${DEBIAN}_${ARCH}/DEBIAN
-    dpkg-deb --build ${DIR_VER}-1.${DEBIAN}_${ARCH}
+    cd ${DIR_VER}-${VERSION}
+    dch -m -D "${DEBIAN}" --force-distribution -v "${VERSION}-${RELEASE}.${DEBIAN}" 'Update distribution'
+    dpkg-buildpackage -rfakeroot -uc -us -b
     
     mkdir -p ${CURDIR}/deb
     mkdir -p ${WORKDIR}/deb
@@ -377,15 +372,19 @@ INSTALL=0
 BRANCH="master"
 REPO="https://github.com/EvgeniyPatlan/info_packages.git"
 DIR_NAME=""
+RELEASE=1
 
 parse_arguments PICK-ARGS-FROM-ARGV "$@"
 
 if [ x${PRODUCT} = "xps-80" ]; then
     DIR_NAME=percona-server-80-info
+    VERSION=80
 elif [ x${PRODUCT} = "xpxc-80" ]; then
     DIR_NAME=percona-xtradb-cluster-80-info
+    VERSION=80
 elif [ x${PRODUCT} = "xpsmdb-40" ]; then
-    DIR_NAME=percona-server-mongodb-80-info
+    DIR_NAME=percona-server-mongodb-40-info
+    VERSION=40
 fi
 check_workdir
 get_system

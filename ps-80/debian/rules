@@ -1,4 +1,4 @@
 #!/usr/bin/make -f
 
 %:
-	exit 0
+	dh $@
