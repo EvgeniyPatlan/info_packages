@@ -1,0 +1,5 @@
+percona-xtradb-cluster-80-info (8.0-1) unstable; urgency=medium
+
+  * Initial release.
+
+ -- Evgeniy Patlan <evgeniy.patlan@percona.com>  Mon, 1 Apr 2019 11:53:23 +0000

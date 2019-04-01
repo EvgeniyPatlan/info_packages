@@ -1,0 +1,10 @@
+Source: percona-xtradb-cluster-80-info
+Section: utils
+Priority: optional
+Maintainer: Percona LLC
+Homepage: https://percona.com
+Version:  ${version} 
+
+Package: percona-xtradb-cluster-80-info
+Description: Percona XtraDB Cluster info package
+Architecture: amd64
